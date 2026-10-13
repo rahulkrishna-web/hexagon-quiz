@@ -18,7 +18,8 @@ export default function Assessment() {
     let url = `/?result&id=${encodeResultId(answers)}`;
     const other = answers.otherText.trim();
     if (answers.barriers[0] === OTHER_INDEX && other) url += `&other=${encodeURIComponent(other)}`;
-    router.push(url);
+    // Results scrolls itself to the top on mount, so skip Next's own scroll handling.
+    router.push(url, { scroll: false });
   };
 
   return result ? (

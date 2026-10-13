@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { category, keyOpportunities, primaryBarrier, priority, score, type Answers } from "@/lib/assessment";
 import "./results.css";
 
@@ -20,6 +20,15 @@ export default function Results({ answers, resultId }: { answers: Answers; resul
   const [date] = useState(() =>
     new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }),
   );
+
+  // Always open the report at the top, whatever the quiz scroll position was.
+  // Repeated on the next frame to win over late scroll anchoring / smooth scrolls.
+  useLayoutEffect(() => {
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    toTop();
+    const id = requestAnimationFrame(toTop);
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const [shown, setShown] = useState(0);
   useEffect(() => {
