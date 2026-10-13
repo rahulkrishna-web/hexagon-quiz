@@ -1,0 +1,408 @@
+/* All sizes are design px / 16 (see html font-size in globals.css). */
+
+.qz-page {
+  background: #fff;
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+.qz-container {
+  max-width: 100.9375rem;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+  padding: 7.5875rem 0 7.5rem;
+}
+
+/* ---------- Header ---------- */
+
+.qz-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8125rem;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.qz-eyebrow::before {
+  content: "";
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.qz-title {
+  margin-top: 1.5rem;
+  font-size: 3.25rem;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.qz-lead {
+  margin-top: 0.875rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: var(--slate);
+}
+
+.qz-lead + .qz-lead {
+  margin-top: 2rem;
+}
+
+.qz-flow {
+  margin-top: 2.375rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.qz-flowArrow {
+  display: inline-block;
+  width: 0.72em;
+  height: 0.72em;
+  margin: 0 0.04em 0 0.02em;
+  vertical-align: -0.06em;
+}
+
+.qz-flowArrowFirst {
+  margin-left: 0;
+}
+
+/* ---------- Progress ---------- */
+
+.qz-progress {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin-top: 4.3125rem;
+  padding-top: 1rem;
+  background: #fff;
+}
+
+.qz-progressLabels {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.qz-progressCount {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.qz-progressPct {
+  color: var(--muted);
+}
+
+.qz-track {
+  margin-top: 0.875rem;
+  height: 0.25rem;
+  background: var(--line);
+}
+
+.qz-fill {
+  height: 100%;
+  background: var(--navy);
+  transition: width 0.4s ease;
+}
+
+/* ---------- Question ---------- */
+
+.qz-question {
+  padding-top: 2.8125rem;
+  scroll-margin-top: 6rem;
+}
+
+.qz-question + .qz-question {
+  padding-top: 4.8125rem;
+}
+
+.qz-qHead {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.qz-qNum {
+  flex: none;
+  font-size: 3.8125rem;
+  line-height: 0.82;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.qz-qText {
+  margin-top: -0.25rem;
+  font-size: 2rem;
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+}
+
+.qz-measures {
+  margin-top: 0.4375rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.qz-missing {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #c62828;
+}
+
+/* ---------- Options ---------- */
+
+.qz-options {
+  display: grid;
+  column-gap: 5.0625rem;
+  row-gap: 4.5rem;
+  margin-top: 3.775rem;
+  padding: 0 2rem;
+}
+
+.qz-options[data-cols="2"] {
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 4.8125rem;
+  margin-top: 4.2rem;
+}
+.qz-options[data-cols="2"] .qz-optionLabel {
+  column-gap: 0.625rem;
+}
+.qz-options[data-cols="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+.qz-options[data-cols="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.qz-optionOther {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  column-gap: 1.125rem;
+}
+
+.qz-optionLabel {
+  display: grid;
+  grid-template-columns: 1.25rem auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: 1.25rem;
+  cursor: pointer;
+}
+
+.qz-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.qz-mark {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--inactive);
+  border-radius: 50%;
+  color: var(--navy);
+  transition: border-color 0.15s ease;
+}
+
+.qz-mark[data-type="checkbox"] {
+  border-radius: 0.1875rem;
+}
+
+.qz-mark svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  opacity: 0;
+}
+
+.qz-letter {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--inactive);
+  transition: color 0.15s ease;
+}
+
+.qz-optText {
+  grid-column: 1 / -1;
+  font-size: 1.375rem;
+  line-height: 1.32;
+  font-weight: 500;
+  letter-spacing: 0.012em;
+}
+
+.qz-optionLabel:hover .qz-mark {
+  border-color: var(--muted);
+}
+.qz-optionLabel:hover .qz-letter {
+  color: var(--muted);
+}
+
+.qz-input:focus-visible + .qz-mark {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.qz-option[data-checked="true"] .qz-mark {
+  border-color: var(--navy);
+}
+.qz-option[data-checked="true"] .qz-mark[data-type="radio"]::after {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--navy);
+}
+.qz-option[data-checked="true"] .qz-mark svg {
+  opacity: 1;
+}
+.qz-option[data-checked="true"] .qz-letter {
+  color: var(--navy);
+}
+
+.qz-otherInput {
+  width: calc(100% - 0.625rem);
+  margin-bottom: 0.4rem;
+  padding: 0 0 0.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--inactive);
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--navy);
+  outline: none;
+}
+
+.qz-otherInput:focus {
+  border-bottom-color: var(--navy);
+}
+
+/* ---------- Submit ---------- */
+
+.qz-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 5.375rem;
+  margin-top: 7.5rem;
+  padding: 0 0.875rem 0 3.8rem;
+  border-radius: 0.375rem;
+  background: var(--navy);
+  color: #fff;
+  font-size: 2rem;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.qz-submit:hover {
+  background: #0d3355;
+}
+
+.qz-submitIcon {
+  display: grid;
+  place-items: center;
+  width: 3.625rem;
+  height: 3.625rem;
+  border-radius: 50%;
+  background: #daf638;
+  color: #1e1e1e;
+  transition: transform 0.2s ease;
+}
+
+.qz-submitIcon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.qz-submit:hover .qz-submitIcon {
+  transform: translateX(0.25rem);
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 767px) {
+  .qz-container {
+    width: auto;
+    padding: 3rem 1rem 4rem;
+  }
+  .qz-title {
+    font-size: 2rem;
+  }
+  .qz-lead,
+  .qz-flow {
+    font-size: 1.0625rem;
+    line-height: 1.6rem;
+  }
+  .qz-progress {
+    margin-top: 2.5rem;
+  }
+  .qz-progressLabels {
+    font-size: 0.8125rem;
+  }
+  .qz-question + .qz-question {
+    padding-top: 3.5rem;
+  }
+  .qz-qHead {
+    gap: 0.875rem;
+  }
+  .qz-qNum {
+    font-size: 2.5rem;
+  }
+  .qz-qText {
+  margin-top: -0.25rem;
+    font-size: 1.25rem;
+  }
+  .qz-measures {
+    font-size: 0.875rem;
+  }
+  .qz-options,
+  .qz-options[data-cols] {
+    grid-template-columns: 1fr;
+    row-gap: 1.75rem;
+    margin-top: 2rem;
+    padding: 0;
+  }
+  .qz-optionLabel {
+    row-gap: 0.625rem;
+  }
+  .qz-letter {
+    font-size: 1.125rem;
+  }
+  .qz-optText {
+    font-size: 1.0625rem;
+  }
+  .qz-optionOther {
+    grid-template-columns: 1fr;
+    row-gap: 0.75rem;
+  }
+  .qz-submit {
+    height: 4rem;
+    margin-top: 4rem;
+    padding: 0 0.5rem 0 1.25rem;
+    font-size: 1.125rem;
+  }
+  .qz-submitIcon {
+    width: 3rem;
+    height: 3rem;
+  }
+}
