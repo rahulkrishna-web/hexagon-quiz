@@ -7,6 +7,7 @@ import "./results.css";
 
 const RING_R = 140.5;
 const RING_C = 2 * Math.PI * RING_R;
+const COUNT_MS = 1600;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -31,9 +32,22 @@ export default function Results({ answers }: { answers: Answers }) {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  // One tween drives both the ring and the count-up number so they stay in sync.
   const [shown, setShown] = useState(0);
   useEffect(() => {
-    const id = requestAnimationFrame(() => setShown(total));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = requestAnimationFrame(() => setShown(total));
+      return () => cancelAnimationFrame(id);
+    }
+    let id = 0;
+    let start: number | undefined;
+    const tick = (now: number) => {
+      start ??= now;
+      const t = Math.min((now - start) / COUNT_MS, 1);
+      setShown(total * (1 - (1 - t) ** 5)); // easeOutQuint
+      if (t < 1) id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(id);
   }, [total]);
 
@@ -78,7 +92,7 @@ export default function Results({ answers }: { answers: Answers }) {
                   />
                 </svg>
                 <div className="rp-ringLabel">
-                  <span className="rp-score">{total}</span>
+                  <span className="rp-score">{Math.round(shown)}</span>
                   <span className="rp-outOf">Out of 100</span>
                 </div>
               </div>

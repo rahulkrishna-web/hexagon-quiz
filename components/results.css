@@ -125,7 +125,6 @@
 
 .rp-ringValue {
   stroke: #cff81d;
-  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .rp-ringLabel {
@@ -138,6 +137,7 @@
 }
 
 .rp-score {
+  font-variant-numeric: tabular-nums;
   font-size: 5.375rem;
   line-height: 1;
   font-weight: 700;
