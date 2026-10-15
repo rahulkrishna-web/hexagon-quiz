@@ -23,7 +23,7 @@ export default function Assessment() {
   };
 
   return result ? (
-    <Results answers={result} resultId={id.toLowerCase()} />
+    <Results answers={result} />
   ) : (
     <Quiz answers={answers} onChange={setAnswers} onSubmit={finish} />
   );

@@ -1,16 +1,29 @@
 /* All sizes are design px / 16 (see html font-size in globals.css). */
 
 .rp-page {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   background: var(--navy);
   color: #fff;
 }
 
+/* Pre-cut diagonal photo, pinned to the top-right corner of the page. */
+.rp-hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80.0625rem;
+  height: auto;
+  pointer-events: none;
+}
+
 .rp-container {
+  position: relative;
   max-width: 100.9375rem;
   width: calc(100% - 4rem);
   margin: 0 auto;
-  padding: 7.5875rem 0 7.25rem;
+  padding: 7.5875rem 0 7.625rem;
 }
 
 /* ---------- Header ---------- */
@@ -38,23 +51,27 @@
 .rp-title {
   margin-top: 1.5rem;
   font-size: 3.25rem;
-  line-height: 1.15;
+  line-height: 3.625rem;
   font-weight: 400;
   letter-spacing: -0.05em;
 }
 
-.rp-subtitle {
-  margin-top: 0.875rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  color: #ccd4db;
+/* ---------- Overview: score (left) + key opportunities (right) ---------- */
+
+/* The opportunities column runs past the container's right edge in the design. */
+.rp-overview {
+  display: grid;
+  grid-template-columns: 49.3125rem 52.5rem;
+  column-gap: 4rem;
+  align-items: start;
+  margin-top: 6.4563rem;
+  margin-right: -4.875rem;
 }
 
 .rp-progressLabels {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 2.475rem;
   font-size: 1rem;
   line-height: 1.2;
   text-transform: uppercase;
@@ -76,14 +93,9 @@
   background: var(--lime);
 }
 
-/* ---------- Score card ---------- */
-
 .rp-scoreCard {
-  display: flex;
-  align-items: center;
-  gap: 5.375rem;
   margin-top: 2.5rem;
-  padding: 2.5625rem 4.8125rem;
+  padding: 3.625rem 2.9375rem;
   border: 1px solid var(--card-line);
   border-radius: 0.25rem;
   background: var(--card);
@@ -91,9 +103,9 @@
 
 .rp-ring {
   position: relative;
-  flex: none;
-  width: 15.625rem;
-  height: 15.625rem;
+  width: 19.375rem;
+  height: 19.375rem;
+  margin-left: 11.3125rem;
 }
 
 .rp-ring svg {
@@ -104,7 +116,7 @@
 
 .rp-ring circle {
   fill: none;
-  stroke-width: 22;
+  stroke-width: 29;
 }
 
 .rp-ringTrack {
@@ -118,24 +130,23 @@
 
 .rp-ringLabel {
   position: absolute;
-  inset: 0;
+  inset: 0 0 0.625rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 0.3125rem;
 }
 
 .rp-score {
-  font-size: 4.75rem;
+  font-size: 5.375rem;
   line-height: 1;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .rp-outOf {
-  margin-top: 0.25rem;
-  font-size: 1rem;
+  margin-top: 1.4375rem;
+  font-size: 1.5rem;
   line-height: 1;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -147,18 +158,19 @@
   display: inline-flex;
   align-items: center;
   height: 1.9375rem;
+  margin-top: 4.8125rem;
   padding: 0 0.875rem;
   border-radius: 999px;
   background: var(--lime);
   color: #101214;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.145em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .rp-category {
-  margin-top: 1.625rem;
+  margin-top: 1.5rem;
   font-size: 2.25rem;
   line-height: 1.1;
   font-weight: 500;
@@ -169,17 +181,8 @@
 .rp-summary {
   margin-top: 0.875rem;
   font-size: 1.25rem;
-  line-height: 1.6rem;
+  line-height: 1.8125rem;
   color: #9eadbb;
-}
-
-/* ---------- Key opportunities ---------- */
-
-.rp-sectionHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: 4rem;
 }
 
 .rp-label {
@@ -191,36 +194,21 @@
   color: var(--lime);
 }
 
-.rp-assessmentId {
-  font-size: 0.875rem;
-  color: #73899d;
-}
-
 .rp-opportunities {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 3.1875rem;
+  margin-top: 3.8125rem;
 }
 
 .rp-opportunity {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 2rem;
+  padding-bottom: 2.4375rem;
+  border-bottom: 1px solid #8f9dab;
 }
 
 .rp-opportunity + .rp-opportunity {
-  position: relative;
-  padding-left: 4.0625rem;
-}
-
-.rp-opportunity + .rp-opportunity::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 1.1rem;
-  bottom: -0.6rem;
-  width: 1px;
-  background: #728698;
+  padding-top: 3.125rem;
 }
 
 .rp-oppTitle {
@@ -230,29 +218,25 @@
   line-height: 1.2;
   font-weight: 500;
   letter-spacing: -0.01em;
-  white-space: nowrap;
 }
 
 .rp-oppBody {
-  display: flex;
-  align-items: center;
-  min-height: 4.6875rem;
+  max-width: 35rem;
+  margin-top: 3.2rem;
   font-size: 1.25rem;
   line-height: 1.5625rem;
   letter-spacing: -0.015em;
 }
 
-.rp-opportunity:nth-child(1) .rp-oppBody p {
-  max-width: 21rem;
+.rp-opportunity:nth-child(3) .rp-oppBody {
+  max-width: 40rem;
 }
-.rp-opportunity:nth-child(2) .rp-oppBody p {
-  max-width: 26rem;
-}
-.rp-opportunity:nth-child(3) {
-  padding-right: 2rem;
-}
-.rp-opportunity:nth-child(3) .rp-oppBody p {
-  max-width: 29rem;
+
+.rp-oppIcon {
+  flex: none;
+  width: 7.3125rem;
+  height: 7.3125rem;
+  margin-top: 1.25rem;
 }
 
 /* ---------- Priority / barrier cards ---------- */
@@ -260,13 +244,14 @@
 .rp-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7.625rem;
-  margin-top: 5.1625rem;
+  gap: 4.125rem;
+  margin-top: 6.125rem;
 }
 
 .rp-card {
-  min-height: 17.4375rem;
-  padding: 2rem 1.9375rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.9375rem 1.9375rem 0.4375rem;
   border: 1px solid var(--card-line);
   background: var(--card);
 }
@@ -293,15 +278,14 @@
 }
 
 .rp-cardTitle {
-  margin-top: 1.5rem;
+  margin-top: 1.6875rem;
   font-size: 2rem;
   line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
 .rp-cardBody {
-  max-width: 40.5rem;
-  margin-top: 1.125rem;
+  margin: 0.875rem 0 1.5625rem;
   font-size: 1rem;
   line-height: 1.5rem;
   color: #9eadbb;
@@ -309,8 +293,19 @@
 
 /* ---------- Next step ---------- */
 
+.rp-card:nth-child(2) .rp-cardBody {
+  max-width: 42rem;
+}
+
+/* Bottom-aligned so both cards' photos line up whatever the copy length. */
+.rp-cardImage {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+}
+
 .rp-next {
-  margin-top: 7.075rem;
+  margin-top: 7.025rem;
 }
 
 .rp-nextTitle {
@@ -376,34 +371,56 @@
 /* ---------- Mobile ---------- */
 
 @media (max-width: 767px) {
+  /* Photo becomes a banner above the copy; the pre-cut diagonal still reads well. */
+  .rp-hero {
+    position: static;
+    display: block;
+    width: 100%;
+  }
   .rp-container {
     width: auto;
-    padding: 3rem 1rem 3rem;
+    padding: 1.5rem 1rem 3rem;
   }
   .rp-title {
+    margin-top: 1rem;
     font-size: 2rem;
+    line-height: 2.375rem;
   }
-  .rp-subtitle {
-    font-size: 1.0625rem;
+  .rp-title br {
+    display: none;
+  }
+  .rp-overview {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3rem;
+    margin: 2.5rem 0 0;
   }
   .rp-progressLabels {
     font-size: 0.75rem;
   }
+  .rp-track {
+    margin-top: 0.625rem;
+  }
   .rp-scoreCard {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
+    margin-top: 1.5rem;
     padding: 2rem 1.25rem;
   }
   .rp-ring {
-    width: 11rem;
-    height: 11rem;
+    width: 12rem;
+    height: 12rem;
+    margin: 0 auto;
+  }
+  .rp-ringLabel {
+    inset: 0;
   }
   .rp-score {
     font-size: 3.5rem;
   }
   .rp-outOf {
-    font-size: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+  }
+  .rp-pill {
+    margin-top: 2rem;
   }
   .rp-category {
     margin-top: 1.25rem;
@@ -413,39 +430,30 @@
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  .rp-sectionHead {
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 3rem;
-  }
   .rp-opportunities {
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
   }
   .rp-opportunity {
-    gap: 0.75rem;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
   }
   .rp-opportunity + .rp-opportunity {
-    padding: 2rem 0 0;
-  }
-  .rp-opportunity + .rp-opportunity::before {
-    top: 0;
-    bottom: auto;
-    width: 100%;
-    height: 1px;
+    padding-top: 1.5rem;
   }
   .rp-oppTitle {
     font-size: 1.375rem;
-    white-space: normal;
   }
-  .rp-oppBody {
-    min-height: 0;
+  .rp-oppBody,
+  .rp-opportunity:nth-child(3) .rp-oppBody {
+    max-width: none;
+    margin-top: 0.75rem;
     font-size: 1rem;
     line-height: 1.5rem;
   }
-  .rp-opportunity .rp-oppBody p {
-    max-width: none;
+  .rp-oppIcon {
+    width: 4rem;
+    height: 4rem;
+    margin-top: 0;
   }
   .rp-cards {
     grid-template-columns: 1fr;
@@ -453,14 +461,17 @@
     margin-top: 3rem;
   }
   .rp-card {
-    min-height: 0;
-    padding: 1.5rem 1.25rem;
+    padding: 1.5rem 1.25rem 0.375rem;
+  }
+  .rp-card:nth-child(2) .rp-cardBody {
+    max-width: none;
   }
   .rp-cardIcon {
     width: 3rem;
     height: 3rem;
   }
   .rp-cardTitle {
+    margin-top: 1.25rem;
     font-size: 1.375rem;
   }
   .rp-next {

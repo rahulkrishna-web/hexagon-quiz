@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useState } from "react";
+import Image from "next/image";
 import { category, keyOpportunities, primaryBarrier, priority, score, type Answers } from "@/lib/assessment";
 import "./results.css";
 
-const RING_R = 114;
+const RING_R = 140.5;
 const RING_C = 2 * Math.PI * RING_R;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function Results({ answers, resultId }: { answers: Answers; resultId: string }) {
+export default function Results({ answers }: { answers: Answers }) {
   const total = score(answers);
   const cat = category(total);
   const opportunities = keyOpportunities(answers);
@@ -38,58 +39,72 @@ export default function Results({ answers, resultId }: { answers: Answers; resul
 
   return (
     <main className="rp-page">
+      <Image
+        className="rp-hero"
+        src="/results/hero.png"
+        alt=""
+        width={1281}
+        height={402}
+        loading="eager"
+        fetchPriority="high"
+      />
       <div className="rp-container">
         <p className="rp-eyebrow">Assessment complete</p>
-        <h1 className="rp-title">Real-Time Customer Report</h1>
-        <p className="rp-subtitle">Your Manufacturing Automation Readiness</p>
+        <h1 className="rp-title">
+          Real-Time Customer Report.
+          <br /> Your Manufacturing
+          <br /> Automation Readiness
+        </h1>
 
-        <div className="rp-progressLabels">
-          <span className="rp-progressCount">10 of 10 questions answered</span>
-          <span className="rp-progressMeta">Report generated</span>
-        </div>
-        <div className="rp-track" />
-
-        <section className="rp-scoreCard">
-          <div className="rp-ring">
-            <svg viewBox="0 0 250 250" aria-hidden>
-              <circle cx="125" cy="125" r={RING_R} className="rp-ringTrack" />
-              <circle
-                cx="125"
-                cy="125"
-                r={RING_R}
-                className="rp-ringValue"
-                strokeDasharray={RING_C}
-                strokeDashoffset={RING_C * (1 - shown / 100)}
-              />
-            </svg>
-            <div className="rp-ringLabel">
-              <span className="rp-score">{total}</span>
-              <span className="rp-outOf">Out of 100</span>
-            </div>
-          </div>
+        <div className="rp-overview">
           <div>
-            <span className="rp-pill">{cat.badge}</span>
-            <h2 className="rp-category">{cat.name}</h2>
-            <p className="rp-summary">{cat.summary}</p>
-          </div>
-        </section>
+            <div className="rp-progressLabels">
+              <span className="rp-progressCount">10 of 10 questions answered</span>
+              <span className="rp-progressMeta">Report generated</span>
+            </div>
+            <div className="rp-track" />
 
-        <div className="rp-sectionHead">
-          <h3 className="rp-label">Key Opportunities</h3>
-          <span className="rp-assessmentId">Assessment ID · MARA-{resultId.toUpperCase()}</span>
-        </div>
-        <div className="rp-opportunities">
-          {opportunities.map((o, i) => (
-            <article key={o.title} className="rp-opportunity">
-              <h4 className="rp-oppTitle">
-                <span>{pad(i + 1)}</span>
-                {o.title}
-              </h4>
-              <div className="rp-oppBody">
-                <p>{o.body}</p>
+            <section className="rp-scoreCard">
+              <div className="rp-ring">
+                <svg viewBox="0 0 310 310" aria-hidden>
+                  <circle cx="155" cy="155" r={RING_R} className="rp-ringTrack" />
+                  <circle
+                    cx="155"
+                    cy="155"
+                    r={RING_R}
+                    className="rp-ringValue"
+                    strokeDasharray={RING_C}
+                    strokeDashoffset={RING_C * (1 - shown / 100)}
+                  />
+                </svg>
+                <div className="rp-ringLabel">
+                  <span className="rp-score">{total}</span>
+                  <span className="rp-outOf">Out of 100</span>
+                </div>
               </div>
-            </article>
-          ))}
+              <span className="rp-pill">{cat.badge}</span>
+              <h2 className="rp-category">{cat.name}</h2>
+              <p className="rp-summary">{cat.summary}</p>
+            </section>
+          </div>
+
+          <section>
+            <h3 className="rp-label">Key Opportunities</h3>
+            <div className="rp-opportunities">
+              {opportunities.map((o, i) => (
+                <article key={o.title} className="rp-opportunity">
+                  <div>
+                    <h4 className="rp-oppTitle">
+                      <span>{pad(i + 1)}</span>
+                      {o.title}
+                    </h4>
+                    <p className="rp-oppBody">{o.body}</p>
+                  </div>
+                  <Image className="rp-oppIcon" src="/results/opportunity-icon.png" alt="" width={121} height={121} />
+                </article>
+              ))}
+            </div>
+          </section>
         </div>
 
         <div className="rp-cards">
@@ -106,6 +121,7 @@ export default function Results({ answers, resultId }: { answers: Answers; resul
             </div>
             <p className="rp-cardTitle">{prio.title}</p>
             <p className="rp-cardBody">{prio.body}</p>
+            <Image className="rp-cardImage" src="/results/machine.png" alt="" width={711} height={449} />
           </article>
 
           <article className="rp-card">
@@ -121,6 +137,7 @@ export default function Results({ answers, resultId }: { answers: Answers; resul
             </div>
             <p className="rp-cardTitle">{barrier.title}</p>
             <p className="rp-cardBody">{barrier.body}</p>
+            <Image className="rp-cardImage" src="/results/machine.png" alt="" width={711} height={449} />
           </article>
         </div>
 
