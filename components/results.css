@@ -58,14 +58,12 @@
 
 /* ---------- Overview: score (left) + key opportunities (right) ---------- */
 
-/* The opportunities column runs past the container's right edge in the design. */
 .rp-overview {
   display: grid;
-  grid-template-columns: 49.3125rem 52.5rem;
+  grid-template-columns: minmax(0, 1fr) 52.5rem;
   column-gap: 4rem;
   align-items: start;
   margin-top: 6.4563rem;
-  margin-right: -4.875rem;
 }
 
 .rp-progressLabels {
@@ -105,7 +103,7 @@
   position: relative;
   width: 19.375rem;
   height: 19.375rem;
-  margin-left: 11.3125rem;
+  margin: 0 auto;
 }
 
 .rp-ring svg {
@@ -236,7 +234,7 @@
   flex: none;
   width: 5.1875rem;
   height: 5.8125rem;
-  margin: 2.25rem 0.5rem 0 0;
+  margin: 2.25rem 0 0;
 }
 
 /* ---------- Priority / barrier cards ---------- */
