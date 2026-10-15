@@ -234,9 +234,9 @@
 
 .rp-oppIcon {
   flex: none;
-  width: 7.3125rem;
-  height: 7.3125rem;
-  margin-top: 1.25rem;
+  width: 5.1875rem;
+  height: 5.8125rem;
+  margin: 2.25rem 0.5rem 0 0;
 }
 
 /* ---------- Priority / barrier cards ---------- */
@@ -451,9 +451,9 @@
     line-height: 1.5rem;
   }
   .rp-oppIcon {
-    width: 4rem;
-    height: 4rem;
-    margin-top: 0;
+    width: 3rem;
+    height: 3.375rem;
+    margin: 0.25rem 0 0;
   }
   .rp-cards {
     grid-template-columns: 1fr;

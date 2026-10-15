@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useState } from "react";
 import Image from "next/image";
+import HexIcon from "./HexIcon";
 import { category, keyOpportunities, primaryBarrier, priority, score, type Answers } from "@/lib/assessment";
 import "./results.css";
 
@@ -114,7 +115,7 @@ export default function Results({ answers }: { answers: Answers }) {
                     </h4>
                     <p className="rp-oppBody">{o.body}</p>
                   </div>
-                  <Image className="rp-oppIcon" src="/results/opportunity-icon.png" alt="" width={121} height={121} />
+                  <HexIcon index={i} className="rp-oppIcon" />
                 </article>
               ))}
             </div>
