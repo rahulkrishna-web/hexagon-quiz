@@ -14,9 +14,9 @@ export const QUESTIONS: Question[] = [
     text: "How consistently does your manufacturing operation deliver the same quality results, regardless of who performs the task or when?",
     measures: "Process consistency and standardisation",
     options: [
-      { label: "Yes - Consistently", points: 10 },
-      { label: "Partly — Some variation", points: 5 },
-      { label: "No — Significant variation", points: 0 },
+      { label: "Yes, consistently", points: 10 },
+      { label: "Partly, some variation", points: 5 },
+      { label: "No, significant variation", points: 0 },
     ],
   },
   {
@@ -25,19 +25,18 @@ export const QUESTIONS: Question[] = [
     measures: "Current automation maturity",
     options: [
       { label: "Mostly manual", points: 0 },
-      { label: "Partly automated", points: 5 },
+      { label: "A combination of manual and automated processes", points: 5 },
       { label: "Highly automated", points: 10 },
-      { label: "A combination of manual and automated processes", points: 7 },
     ],
   },
   {
     id: 3,
-    text: "How repetitive and high-volume are your manufacturing processes?",
+    text: "What type of production does your company mainly handle?",
     measures: "Potential for automation",
     options: [
-      { label: "Highly repetitive / high volume", points: 10 },
-      { label: "A mix of repetitive and low-volume production", points: 6 },
-      { label: "Mostly low-volume / customised / one-off", points: 2 },
+      { label: "Mostly high-volume, repetitive production", points: 10 },
+      { label: "A mix of high-volume and low-volume production", points: 6 },
+      { label: "Mostly small batches or customised products", points: 2 },
     ],
   },
   {
@@ -52,12 +51,12 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 5,
-    text: "Are your current manufacturing or inspection processes limiting productivity or throughput?",
+    text: "Are your current manufacturing or inspection processes slowing down production?",
     measures: "Business impact and automation opportunity",
     options: [
-      { label: "Yes — significantly", points: 15 },
+      { label: "Yes — significantly", points: 0 },
       { label: "Yes — somewhat", points: 8 },
-      { label: "No — not currently", points: 0 },
+      { label: "No — not currently", points: 15 },
     ],
   },
   {
@@ -82,7 +81,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 8,
-    text: "Do you have a defined plan or investment timeline to automate your manufacturing operation?",
+    text: "Does your company have a plan to invest in automating your manufacturing process?",
     measures: "Investment readiness",
     options: [
       { label: "Yes — budget and timeline are in place", points: 10 },
@@ -104,11 +103,10 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 10,
-    text: "What is your biggest barrier to moving forward with automation?",
+    text: "What is your biggest challenge for automating your manufacturing process?",
     measures: "Primary automation barrier",
     multi: true,
     options: [
-      { label: "Unclear ROI / business case", points: 0 },
       { label: "Budget", points: 0 },
       { label: "People / skills", points: 0 },
       { label: "Integration with existing systems", points: 0 },
@@ -119,7 +117,7 @@ export const QUESTIONS: Question[] = [
   },
 ];
 
-export const OTHER_INDEX = 6;
+export const OTHER_INDEX = 5;
 
 /** Single-choice answers for Q1–Q9 (option index), multi-choice for Q10 (in click order). */
 export type Answers = {
@@ -145,99 +143,154 @@ export type Category = {
   badge: string;
   summary: string;
   nextStep: string;
+  nextBody: string;
 };
 
-export function category(s: number): Category {
+/** Readiness category from the total score (bands from "Automation readiness scoring v1, 21 Oct"). */
+export function category(s: number, a?: Answers): Category {
+  if (s >= 90) {
+    // "Optimise & expand" only when Q2 confirms existing automation; otherwise "Highly ready to automate".
+    const hasAutomation = a ? (a.single[2] ?? 0) !== 0 : true;
+    return hasAutomation
+      ? {
+          name: "Optimise & expand",
+          badge: "Optimise & expand",
+          summary:
+            "Your manufacturing operation demonstrates strong operational and digital capabilities. There may be opportunities to improve existing automation, strengthen connectivity and expand automation across other processes.",
+          nextStep: "Take your automation performance further",
+          nextBody:
+            "Identify opportunities to optimise manufacturing performance and expand automation where it can deliver greater value.",
+        }
+      : {
+          name: "Highly ready to automate",
+          badge: "Highly ready to automate",
+          summary:
+            "Your manufacturing operation demonstrates strong operational and digital capabilities, giving you a solid foundation to introduce automation across your processes.",
+          nextStep: "Take your automation performance further",
+          nextBody:
+            "Identify the processes where automation can deliver the greatest value and plan how to introduce it.",
+        };
+  }
   if (s >= 70)
     return {
-      name: "Ready to Automate",
-      badge: "Pilot Ready",
-      summary: "Your assessment indicates strong potential for automation across your manufacturing operation.",
+      name: "Ready to advance",
+      badge: "Ready to advance",
+      summary:
+        "Your manufacturing operation has a strong foundation for automation, with opportunities to improve productivity, quality and operational efficiency.",
       nextStep: "Identify your highest-value automation opportunity",
+      nextBody: "Focus on processes where automation can deliver measurable improvements in productivity, quality and efficiency.",
     };
   if (s >= 40)
     return {
-      name: "Building Toward Automation",
-      badge: "Building Readiness",
+      name: "Building towards automation",
+      badge: "Building towards automation",
       summary:
-        "Your operation has clear opportunities for automation, but some factors such as digital maturity, investment, skills or integration may need to be addressed first.",
-      nextStep: "Identify the right automation opportunity and build the business case for change",
+        "Your manufacturing operation shows potential for automation, but some areas may need improvement in process consistency, digital connectivity or investment planning.",
+      nextStep: "Build a practical plan for automation",
+      nextBody: "Strengthen key operational areas and develop a practical plan for automation.",
     };
   return {
-    name: "Early Stage",
-    badge: "Early Stage",
+    name: "Early stage",
+    badge: "Early stage",
     summary:
-      "Your operation is currently at an early stage of automation readiness. There may still be opportunities to improve productivity and prepare your operation for future automation.",
-    nextStep: "Explore where automation could create the greatest impact in your manufacturing operation",
+      "Your manufacturing operation is at an early stage of automation readiness. Improving process stability, data availability and operational efficiency can help prepare your business for future automation.",
+    nextStep: "Prepare your manufacturing operation for automation",
+    nextBody: "Focus on strengthening existing processes and identifying suitable automation opportunities.",
   };
 }
 
 type Opportunity = { title: string; body: string; weight: (a: Answers) => number };
 
-// Weight = how strongly the answers point to this opportunity (0–1). Ties keep list order.
+const q2 = (a: Answers) => a.single[2] ?? 0; // 0 mostly manual, 1 combination, 2 highly automated
+
+// Weight = how strongly the Q1–Q7 answers support this opportunity (0–1). 0 = not supported, never shown.
+// Ties keep list order.
 const OPPORTUNITIES: Opportunity[] = [
   {
-    title: "Increase Productivity",
-    body: "Your current processes indicate opportunities to improve throughput and reduce manual intervention.",
-    weight: (a) => (pts(a, 5) / 15 + (1 - pts(a, 2) / 10)) / 2,
+    title: "Increase productivity",
+    body: "Improve production output and reduce manual work through automation.",
+    weight: (a) => ((1 - pts(a, 5) / 15) + (1 - pts(a, 2) / 10)) / 2,
   },
   {
-    title: "Improve Process Consistency",
-    body: "Automation can help deliver more consistent manufacturing and quality outcomes.",
+    title: "Improve process consistency",
+    body: "Achieve more consistent manufacturing and inspection results.",
     weight: (a) => 1 - pts(a, 1) / 10,
   },
   {
-    title: "Improve Data Visibility",
-    body: "Greater connectivity and digitalisation can provide faster access to manufacturing information and support better decision-making.",
-    weight: (a) => 1 - (pts(a, 4) / 15 + pts(a, 7) / 10) / 2,
-  },
-  {
-    title: "Reduce Skills Dependency",
-    body: "Automating skill-intensive tasks can reduce reliance on scarce specialists and make your operation easier to scale.",
+    title: "Reduce skills dependency",
+    body: "Reduce reliance on manual tasks and support more consistent operations.",
     weight: (a) => 1 - pts(a, 6) / 10,
   },
   {
-    title: "Scale Repetitive Production",
-    body: "Repetitive, high-volume processes are well suited to automation and can deliver faster returns on investment.",
-    weight: (a) => pts(a, 3) / 10,
+    title: "Improve data visibility",
+    body: "Connect manufacturing data to support faster and better-informed decisions.",
+    weight: (a) => 1 - pts(a, 7) / 10,
+  },
+  {
+    title: "Improve production capacity",
+    body: "Explore automation for high-volume processes to increase output.",
+    weight: (a) => (pts(a, 3) / 10) * (pts(a, 5) < 15 ? 1 : 0.6),
+  },
+  {
+    title: "Improve system connectivity",
+    body: "Connect machines, measurement systems and manufacturing data for better efficiency.",
+    weight: (a) => 1 - pts(a, 4) / 15,
+  },
+  {
+    title: "Optimise existing automation",
+    body: "Improve the performance and efficiency of your current automation systems.",
+    weight: (a) => (q2(a) === 2 ? 0.9 : q2(a) === 1 ? 0.45 : 0),
+  },
+  {
+    title: "Expand automation",
+    body: "Identify additional processes where automation can improve productivity and quality.",
+    weight: (a) => (q2(a) === 1 ? 0.5 : q2(a) === 2 ? 0.55 : 0),
   },
 ];
 
+/** Up to three most relevant opportunities — only ones the answers actually support. */
 export function keyOpportunities(a: Answers) {
-  return OPPORTUNITIES.map((o, i) => ({ ...o, w: o.weight(a), i }))
-    .sort((x, y) => y.w - x.w || x.i - y.i)
-    .slice(0, 3)
-    .sort((x, y) => x.i - y.i);
+  const ranked = OPPORTUNITIES.map((o, i) => ({ ...o, w: o.weight(a), i })).sort((x, y) => y.w - x.w || x.i - y.i);
+  const supported = ranked.filter((o) => o.w > 0);
+  return (supported.length ? supported : ranked).slice(0, 3);
 }
 
-const PRIORITY_TEXT = [
-  "Your responses indicate that automation is already a strategic priority for your manufacturing operation.",
-  "Your responses indicate that automation is high on your agenda and you are actively assessing the options.",
-  "Your responses indicate that you recognise the value of automation, but the timing is not yet right.",
-  "Your responses indicate that automation is not currently a strategic focus for your manufacturing operation.",
+// Q9 option order: Critical, Very important, Important (not ready yet), Not a priority.
+const PRIORITY = [
+  { title: "High priority", body: "Automation is a key focus for improving your manufacturing productivity and quality." },
+  {
+    title: "Important priority",
+    body: "Your company recognises the benefits of automation and is considering opportunities for improvement.",
+  },
+  { title: "Future opportunity", body: "Automation is an area your company may explore as manufacturing needs develop." },
+  { title: "Not an immediate priority", body: "Automation is not currently a key focus for your manufacturing operation." },
 ];
 
 export function priority(a: Answers) {
-  const i = a.single[9] ?? 0;
-  const label = QUESTIONS[8].options[i].label.replace("— we", "— We");
-  return { title: label, body: PRIORITY_TEXT[i] };
+  return PRIORITY[a.single[9] ?? 0];
 }
 
-const BARRIER_TEXT = [
-  "Your next step should be to quantify the impact of automation on your operation and build a clear, measurable business case for investment.",
-  "Your next step should be to identify a focused, high-return automation opportunity that can prove value quickly and fund further investment.",
-  "Your next step should be to identify automation solutions that reduce reliance on scarce skills while supporting and upskilling your existing team.",
-  "Your next step should be to identify automation solutions that can integrate with your current manufacturing environment while providing a path toward greater connectivity and productivity.",
-  "Your next step should be to strengthen your digital foundations so that automation can be connected, measured and scaled across your operation.",
-  "Your next step should be to map your processes against proven automation approaches to find the solution that best fits your operation.",
-  "Your next step should be to discuss your specific challenges with an automation specialist to define the right path forward.",
+// Q10 option order: Budget, People/skills, Integration, Digital infrastructure, Solution fit, Others.
+const BARRIERS = [
+  {
+    title: "Budget",
+    body: "Start with a practical automation opportunity that can demonstrate measurable value before expanding investment.",
+  },
+  { title: "People and skills", body: "Explore automation solutions that simplify operations and support your existing workforce." },
+  {
+    title: "Integration with existing systems",
+    body: "Identify solutions that can work with your current machines, software and manufacturing processes.",
+  },
+  { title: "Limited digital infrastructure", body: "Strengthen data collection and connectivity to support future automation." },
+  { title: "Unsure which solution to choose", body: "Review your manufacturing requirements to identify suitable automation technologies." },
+  { title: "Other", body: "Discuss your specific challenges with Hexagon experts to identify a practical way forward." },
 ];
 
 export function primaryBarrier(a: Answers) {
   const i = a.barriers[0] ?? 0;
   const other = a.otherText.trim();
-  const title = i === OTHER_INDEX ? other || "Other" : QUESTIONS[9].options[i].label;
-  return { title, body: BARRIER_TEXT[i] };
+  const b = BARRIERS[i];
+  return { title: i === OTHER_INDEX ? other || b.title : b.title, body: b.body };
 }
 
 /*
@@ -307,6 +360,6 @@ export function decodeResultId(id: string, otherText = ""): Answers | null {
   }
 
   const barriers = [primary];
-  for (let b = 0; b < 7; b++) if (b !== primary && mask & (1 << b)) barriers.push(b);
+  for (let b = 0; b < QUESTIONS[9].options.length; b++) if (b !== primary && mask & (1 << b)) barriers.push(b);
   return { single, barriers, otherText: barriers.includes(OTHER_INDEX) ? otherText : "" };
 }

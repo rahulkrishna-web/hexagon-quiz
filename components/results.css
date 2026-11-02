@@ -173,7 +173,6 @@
   line-height: 1.1;
   font-weight: 500;
   letter-spacing: -0.035em;
-  text-transform: uppercase;
 }
 
 .rp-summary {
@@ -312,6 +311,14 @@
   line-height: 1.2;
   font-weight: 500;
   letter-spacing: -0.048em;
+}
+
+.rp-nextBody {
+  margin-top: 0.875rem;
+  max-width: 48rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #9eadbb;
 }
 
 .rp-cta {
@@ -478,6 +485,10 @@
   .rp-nextTitle {
     margin-top: 1rem;
     font-size: 1.5rem;
+  }
+  .rp-nextBody {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
   .rp-cta {
     height: 4rem;

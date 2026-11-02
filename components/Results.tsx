@@ -14,7 +14,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function Results({ answers }: { answers: Answers }) {
   const total = score(answers);
-  const cat = category(total);
+  const cat = category(total, answers);
   const opportunities = keyOpportunities(answers);
   const prio = priority(answers);
   const barrier = primaryBarrier(answers);
@@ -66,9 +66,8 @@ export default function Results({ answers }: { answers: Answers }) {
       <div className="rp-container">
         <p className="rp-eyebrow">Assessment complete</p>
         <h1 className="rp-title">
-          Real-Time Customer Report.
-          <br /> Your Manufacturing
-          <br /> Automation Readiness
+          Your manufacturing
+          <br /> automation readiness
         </h1>
 
         <div className="rp-overview">
@@ -104,13 +103,13 @@ export default function Results({ answers }: { answers: Answers }) {
           </div>
 
           <section>
-            <h3 className="rp-label">Key Opportunities</h3>
+            <h3 className="rp-label">Your key opportunities</h3>
             <div className="rp-opportunities">
               {opportunities.map((o, i) => (
                 <article key={o.title} className="rp-opportunity">
                   <div>
                     <h4 className="rp-oppTitle">
-                      <span>{pad(i + 1)}</span>
+                      <span>{pad(i + 1)}.</span>
                       {o.title}
                     </h4>
                     <p className="rp-oppBody">{o.body}</p>
@@ -159,8 +158,9 @@ export default function Results({ answers }: { answers: Answers }) {
         <section className="rp-next">
           <h3 className="rp-label">Recommended Next Step</h3>
           <p className="rp-nextTitle">{cat.nextStep}</p>
+          <p className="rp-nextBody">{cat.nextBody}</p>
           <a className="rp-cta" href="#">
-            <span>Explore Automation Opportunities</span>
+            <span>Explore automation opportunities</span>
             <span className="rp-ctaIcon" aria-hidden>
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M2 12h19.5M13.5 4l8 8-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
