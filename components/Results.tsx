@@ -135,7 +135,7 @@ export default function Results({ answers }: { answers: Answers }) {
             </div>
             <p className="rp-cardTitle">{prio.title}</p>
             <p className="rp-cardBody">{prio.body}</p>
-            <Image className="rp-cardImage" src="/results/machine.png" alt="" width={711} height={449} />
+            <Image className="rp-cardImage" src="/results/priority.jpg" alt="" width={1330} height={840} />
           </article>
 
           <article className="rp-card">
@@ -151,7 +151,7 @@ export default function Results({ answers }: { answers: Answers }) {
             </div>
             <p className="rp-cardTitle">{barrier.title}</p>
             <p className="rp-cardBody">{barrier.body}</p>
-            <Image className="rp-cardImage" src="/results/machine.png" alt="" width={711} height={449} />
+            <Image className="rp-cardImage" src="/results/barrier.jpg" alt="" width={1280} height={808} />
           </article>
         </div>
 
