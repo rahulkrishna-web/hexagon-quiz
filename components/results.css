@@ -13,7 +13,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 80.0625rem;
+  width: min(80.0625rem, 66vw);
   height: auto;
   pointer-events: none;
 }
@@ -63,7 +63,8 @@
   grid-template-columns: minmax(0, 1fr) 52.5rem;
   column-gap: 4rem;
   align-items: start;
-  margin-top: 6.4563rem;
+  /* Start the overview just below the corner photo so "Key opportunities" never sits on the image. */
+  margin-top: max(6.4563rem, calc(min(25.125rem, 20.71vw) - 15.38rem));
 }
 
 .rp-progressLabels {
@@ -200,12 +201,13 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
-  padding-bottom: 2.4375rem;
+  align-items: center;
+  padding-bottom: 2.5rem;
   border-bottom: 1px solid #8f9dab;
 }
 
 .rp-opportunity + .rp-opportunity {
-  padding-top: 3.125rem;
+  padding-top: 2.5rem;
 }
 
 .rp-oppTitle {
@@ -219,7 +221,7 @@
 
 .rp-oppBody {
   max-width: 35rem;
-  margin-top: 3.2rem;
+  margin-top: 1.5rem;
   font-size: 1.25rem;
   line-height: 1.5625rem;
   letter-spacing: -0.015em;
@@ -233,7 +235,7 @@
   flex: none;
   width: 5.1875rem;
   height: 5.8125rem;
-  margin: 2.25rem 0 0;
+  margin: 0;
 }
 
 /* ---------- Priority / barrier cards ---------- */
@@ -374,6 +376,14 @@
 }
 
 /* ---------- Mobile ---------- */
+
+/* Tablets / small laptops: stack score and opportunities so neither column gets squeezed. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .rp-overview {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4rem;
+  }
+}
 
 @media (max-width: 767px) {
   /* Photo becomes a banner above the copy; the pre-cut diagonal still reads well. */
