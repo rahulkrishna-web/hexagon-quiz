@@ -33,6 +33,19 @@ export default function Results({ answers }: { answers: Answers }) {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  // "Discuss my results": show the thank-you note and let the landing page (parent window) know,
+  // so it can pass the request on to Hexagon's sales team.
+  const [discussed, setDiscussed] = useState(false);
+  const discuss = () => {
+    setDiscussed(true);
+    try {
+      window.parent?.postMessage(
+        { type: "hx-quiz-discuss", score: total, category: cat.name, barrier: barrier.title, priority: prio.title },
+        "*",
+      );
+    } catch {}
+  };
+
   // One tween drives both the ring and the count-up number so they stay in sync.
   const [shown, setShown] = useState(0);
   useEffect(() => {
@@ -99,6 +112,21 @@ export default function Results({ answers }: { answers: Answers }) {
               <span className="rp-pill">{cat.badge}</span>
               <h2 className="rp-category">{cat.name}</h2>
               <p className="rp-summary">{cat.summary}</p>
+              {discussed ? (
+                <div className="rp-thanks" role="status">
+                  <p className="rp-thanksTitle">Thank you for completing the assessment!</p>
+                  <p className="rp-thanksBody">Our team will review your responses and get in touch with you shortly.</p>
+                </div>
+              ) : (
+                <button type="button" className="rp-discuss" onClick={discuss}>
+                  <span>Discuss my results</span>
+                  <span className="rp-discussIcon" aria-hidden>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M2 12h19.5M13.5 4l8 8-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </button>
+              )}
             </section>
           </div>
 

@@ -183,6 +183,76 @@
   color: #9eadbb;
 }
 
+.rp-discuss {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  height: 4.25rem;
+  margin-top: 2.25rem;
+  padding: 0 0.625rem 0 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lime);
+  color: #0a2342;
+  font: inherit;
+  font-size: 1.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.rp-discuss:hover {
+  background: #d8ff3d;
+}
+
+.rp-discussIcon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.rp-discussIcon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.rp-discuss:hover .rp-discussIcon {
+  transform: translateX(4px);
+}
+
+.rp-thanks {
+  margin-top: 2.25rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--lime);
+  border-radius: 0.5rem;
+  animation: rp-fade 0.4s ease both;
+}
+
+.rp-thanksTitle {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--lime);
+}
+
+.rp-thanksBody {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #dbe3ea;
+}
+
+@keyframes rp-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
 .rp-label {
   font-size: 0.9375rem;
   line-height: 1.2;
@@ -444,6 +514,26 @@
   .rp-summary {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+  .rp-discuss {
+    height: 3.5rem;
+    margin-top: 1.5rem;
+    padding: 0 0.5rem 0 1.25rem;
+    font-size: 1.0625rem;
+  }
+  .rp-discussIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .rp-thanks {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+  }
+  .rp-thanksTitle {
+    font-size: 1.125rem;
+  }
+  .rp-thanksBody {
+    font-size: 1rem;
   }
   .rp-opportunities {
     margin-top: 1.5rem;
