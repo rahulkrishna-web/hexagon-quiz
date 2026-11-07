@@ -33,7 +33,7 @@ export default function Results({ answers }: { answers: Answers }) {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // "Discuss my results": show the thank-you note and let the landing page (parent window) know,
+  // "Request a consultation": show the thank-you note and let the landing page (parent window) know,
   // so it can pass the request on to Hexagon's sales team.
   const [discussed, setDiscussed] = useState(false);
   const discuss = () => {
@@ -119,7 +119,7 @@ export default function Results({ answers }: { answers: Answers }) {
                 </div>
               ) : (
                 <button type="button" className="rp-discuss" onClick={discuss}>
-                  <span>Discuss my results</span>
+                  <span>Request a consultation</span>
                   <span className="rp-discussIcon" aria-hidden>
                     <svg viewBox="0 0 24 24" fill="none">
                       <path d="M2 12h19.5M13.5 4l8 8-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
