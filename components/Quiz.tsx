@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QUESTIONS, OTHER_INDEX, countAnswered, type Answers, type Question } from "@/lib/assessment";
 import "./quiz.css";
 
@@ -15,6 +15,27 @@ function FlowArrow({ first }: { first?: boolean }) {
   );
 }
 
+// Visitors reach the quiz right after submitting the landing page's lead form, so its load is the
+// Google Ads "Submit lead form" conversion. Fire once per page load (not again when coming back from results).
+let conversionSent = false;
+function sendLeadConversion() {
+  if (conversionSent) return;
+  conversionSent = true;
+  const w = window as unknown as { dataLayer?: unknown[] };
+  w.dataLayer = w.dataLayer || [];
+  // Same as the gtag() stub; pushing directly works even if the tag scripts haven't run yet.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function gtag(..._args: unknown[]) {
+    // eslint-disable-next-line prefer-rest-params
+    w.dataLayer!.push(arguments);
+  }
+  gtag("event", "conversion", {
+    send_to: "AW-18541801296/ZkTVCL6T8bcdENDetYlF",
+    value: 1.0,
+    currency: "INR",
+  });
+}
+
 type Props = {
   answers: Answers;
   onChange: (a: Answers) => void;
@@ -23,6 +44,7 @@ type Props = {
 
 export default function Quiz({ answers, onChange, onSubmit }: Props) {
   const [missing, setMissing] = useState<number | null>(null);
+  useEffect(sendLeadConversion, []);
   const answered = countAnswered(answers);
 
   const isAnswered = (q: Question) => (q.multi ? answers.barriers.length > 0 : q.id in answers.single);
