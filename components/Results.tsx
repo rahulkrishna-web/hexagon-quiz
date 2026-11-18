@@ -38,6 +38,14 @@ export default function Results({ answers }: { answers: Answers }) {
   const [discussed, setDiscussed] = useState(false);
   const discuss = () => {
     setDiscussed(true);
+    // Google Ads: Submit lead form conversion.
+    try {
+      (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.("event", "conversion", {
+        send_to: "AW-18541801296/ZkTVCL6T8bcdENDetYlF",
+        value: 1.0,
+        currency: "INR",
+      });
+    } catch {}
     try {
       window.parent?.postMessage(
         { type: "hx-quiz-discuss", score: total, category: cat.name, barrier: barrier.title, priority: prio.title },

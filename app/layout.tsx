@@ -28,6 +28,11 @@ gtag('js', new Date());
 dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});`}
         </Script>
         <Script id="gtm" src="https://www.googletagmanager.com/gtm.js?id=GTM-52ZSNWZF" strategy="afterInteractive" />
+        {/* Google Ads tag (AW-18541801296), needed for the lead conversion event in Results */}
+        <Script id="gads" src="https://www.googletagmanager.com/gtag/js?id=AW-18541801296" strategy="afterInteractive" />
+        <Script id="gads-config" strategy="afterInteractive">
+          {`gtag('config', 'AW-18541801296');`}
+        </Script>
       </body>
     </html>
   );
